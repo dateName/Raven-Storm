@@ -114,11 +114,11 @@ C_Bo-----------------------------------------------------------C_W""")
 	@event.event
 	def on_command_not_found(command):
 		print("")
-		print("The command you entered does not exist.")
+		print("您输入的命令不存在。")
 		print("")
 
 	def exit_console(self):
-		print("Have a nice day.")
+		print("祝您有美好的一天。")
 		quit()
 
 	@event.event
@@ -129,7 +129,7 @@ C_Bo-----------------------------------------------------------C_W""")
 			status = requests.post((var.server[2] + "set/com"), data={"password": var.server[3], "data": command}).text
 			if status != "200":
 				print("")
-				print("An error occured, while sending commands to the server.")
+				print("发送命令到服务器时发生错误。")
 				print("")
 
 	def _add_commands(self):
@@ -139,23 +139,23 @@ C_Bo-----------------------------------------------------------C_W""")
 		event.commands(self.help, "help")
 		event.parser(self.run_debug_arg, "$")
 		event.parser(self.run_shell_arg, ".")
-		event.help(["exit", "quit", "e", "q"], "Exit Raven-Storm.")
-		event.help("help", "View all commands.")
-		event.help("upgrade", "Upgrade Raven-Storm.")
-		event.help(".", "Run a shell command.")
-		event.help("clear", "Clear the screen.")
-		event.help("record", "Save this session.")
-		event.help("load", "Redo a session using a session file.")
-		event.help("ddos", "Connect to a Raven-Storm server.")
-		event.help_comment("\nModules:")
-		event.help("l4", "Load the layer4 module. (UDP/TCP)")
-		event.help("l3", "Load the layer3 module. (ICMP)")
-		event.help("l7", "Load the layer7 module. (HTTP)")
-		event.help("bl", "Load the bluetooth module. (L2CAP)")
-		event.help("arp", "Load the arp spoofing module. (ARP)")
-		event.help("wifi", "Load the wifi module. (IEEE)")
-		event.help("server", "Load the server module for DDos atacks.")
-		event.help("scanner", "Load the scanner module.")
+		event.help(["exit", "quit", "e", "q"], "退出 Raven-Storm。")
+		event.help("help", "查看所有命令。")
+		event.help("upgrade", "升级 Raven-Storm。")
+		event.help(".", "运行 shell 命令。")
+		event.help("clear", "清除屏幕。")
+		event.help("record", "保存本次会话。")
+		event.help("load", "使用会话文件重放会话。")
+		event.help("ddos", "连接到 Raven-Storm 服务器。")
+		event.help_comment("\n模块：")
+		event.help("l4", "加载第四层模块。 (UDP/TCP)")
+		event.help("l3", "加载第三层模块。 (ICMP)")
+		event.help("l7", "加载第七层模块。 (HTTP)")
+		event.help("bl", "加载蓝牙模块。 (L2CAP)")
+		event.help("arp", "加载 ARP 欺骗模块。 (ARP)")
+		event.help("wifi", "加载 WiFi 模块。 (IEEE)")
+		event.help("server", "加载用于 DDoS 的服务器模块。")
+		event.help("scanner", "加载扫描器模块。")
 
 		var.modules["Layer4"] = console()
 		var.modules["Layer3"] = console()
@@ -195,14 +195,14 @@ C_Bo-----------------------------------------------------------C_W""")
 					sleep(1)
 
 	def run_shell_arg(self, command):
-		return tools.arg("Enter shell command: ", ". ", command)
+		return tools.arg("输入 shell 命令：", ". ", command)
 		print("", end="")
 
 	def debug(self, command):
 		eval(command)
 
 	def run_debug_arg(self, command):
-		return tools.arg("Enter debug command: ", "$ ", command)
+		return tools.arg("输入调试命令：", "$ ", command)
 		print("", end="")
 
 	@event.command
@@ -270,35 +270,34 @@ C_Bo-----------------------------------------------------------C_W""")
 	def ddos(self):
 		print("")
 		try:
-			ddos_host = input("Enter Host URL of the server: ")
-			ddos_password = input("Enter the password: ")
+			ddos_host = input("输入服务器主机 URL：")
+			ddos_password = input("输入密码：")
 			if "http" not in ddos_host:
-				raise Exception("Wrong Host URL.")
+				raise Exception("主机 URL 错误。")
 			if "/" != ddos_host[-1]:
 				ddos_host += "/"
 			test_data = {"password": ddos_password}
 			agreed = requests.post((ddos_host + "get/agreed"), data=test_data).text
 			if agreed != "False":
-				raise Exception("Wrong data was given.")
-			ddos_role = tools.question("Do you want this to be used as a host?")
+				raise Exception("提供的数据错误。")
+			ddos_role = tools.question("是否希望将此用作主机？")
 			status = requests.post((ddos_host + "reset"), data=test_data).text
 			if status != "200":
-				print("Something strange happened.")
+				print("出现了异常情况。")
 			var.server[1] = ddos_role
 			var.server[2] = ddos_host
 			var.server[3] = ddos_password
 			var.server[0] = True
 		except Exception as ex:
-			print("An exception occured.", ex)
-		print("")
+				print("发生异常：", ex)
 
 	@event.command
 	def record(command):
 		print("")
 		try:
-			to_file = tools.arg("Save to file: ", "record ", command)
+			to_file = tools.arg("保存到文件：", "record ", command)
 			if path.isfile(to_file):
-				raise Exception("File already exists.")
+				raise Exception("文件已存在。")
 			else:
 				new_file = open(to_file, "w")
 				# new_file.write("# -- Session File")
@@ -306,7 +305,7 @@ C_Bo-----------------------------------------------------------C_W""")
 				var.session[0][1] = open(to_file, "a")
 				var.session[0][0] = True
 				print("")
-				print("Recording...")
+				print("正在记录...")
 		except Exception as ex:
 			print("An error occured.", ex)
 		print("")
@@ -315,9 +314,9 @@ C_Bo-----------------------------------------------------------C_W""")
 	def load(command):
 		print("")
 		try:
-			from_file = tools.arg("Load from file: ", "load ", command)
+			from_file = tools.arg("从文件加载：", "load ", command)
 			if not path.isfile(from_file):
-				raise Exception("File does not exist.")
+				raise Exception("文件不存在。")
 			else:
 				new_list = []
 				command_list = []
@@ -335,7 +334,7 @@ C_Bo-----------------------------------------------------------C_W""")
 				command_list.append(new_list)
 				var.session[1][1] = command_list
 				var.session[1][0] = True
-				print("Repeating actions...")
+				print("正在重复操作...")
 		except Exception as ex:
 			print("An error occured.", ex)
 		print("")
@@ -347,12 +346,12 @@ C_Bo-----------------------------------------------------------C_W""")
 			system("sudo git clone https://github.com/Taguar258/Raven-Storm.git")
 			chdir("/tmp/Raven-Storm/")
 			system("sudo bash ./install_to_bin.sh")
-			print("[i] Deleting the temporary stored Raven-Storm...")
+			print("[i] 正在删除临时存储的 Raven-Storm...")
 			system("sudo rm -rf -i /tmp/Raven-Storm/")
 			var.stop()
 			quit()
 		except Exception:
-			print("Cound not upgrade Raven-Storm. (Make sure to use sudo)")
+			print("无法升级 Raven-Storm。 (请确保使用 sudo)")
 
 	@event.command
 	def clear():
