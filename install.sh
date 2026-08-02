@@ -23,7 +23,7 @@ if [ -f "/etc/debian_version" ]; then
         echo "[i] 现在将安装 psmisc..."
         sudo apt-get install -y psmisc > /dev/null 2>&1 || echo "[!] 无法安装 psmisc。"
         echo "[i] 现在将下载 Raven-Storm..."
-        sudo git clone https://github.com/Taguar258/Raven-Storm.git > /dev/null 2>&1 || echo "[!] 无法下载 Raven-Storm。"
+        sudo git clone https://github.com/dateName/Raven-Storm.git > /dev/null 2>&1 || echo "[!] 无法下载 Raven-Storm。"
         cd Raven-Storm > /dev/null 2>&1
         echo "[i] 现在将安装依赖..."
         sudo pip3 install -r requirements.txt  > /dev/null 2>&1 || echo "[!] 无法安装依赖。"
@@ -49,7 +49,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
         sudo brew install dsniff > /dev/null 2>&1  || echo "[!] 无法安装 dsniff。"
         # psmisc already preinstalled for sure.
         echo "[i] 现在将下载 Raven-Storm..."
-        sudo git clone https://github.com/Taguar258/Raven-Storm.git > /dev/null 2>&1  || echo "[!] 无法下载 Raven-Storm。"
+        sudo git clone https://github.com/dateName/Raven-Storm.git > /dev/null 2>&1  || echo "[!] 无法下载 Raven-Storm。"
         cd Raven-Storm > /dev/null 2>&1
         echo "[i] 现在将安装依赖..."
         sudo pip3 install -r requirements.txt  > /dev/null 2>&1 || echo "[!] 无法安装依赖。"
@@ -85,7 +85,7 @@ elif [[ "$OSTYPE" == "win32" ]]; then
 else
         echo "[!] 无法检测到您的系统。"
         echo "[i] 请手动安装一些组件"
-        git clone https://github.com/Taguar258/Raven-Storm.git > /dev/null 2>&1 || echo "[!] 请安装 git"
+        git clone https://github.com/dateName/Raven-Storm.git > /dev/null 2>&1 || echo "[!] 请安装 git"
         cd Raven-Storm
         python3 --help > /dev/null 2>&1 || echo "[!] 请安装 python3。"
         command -v ping > /dev/null 2>&1 || echo "[!] 请安装 ping。"
