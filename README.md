@@ -1,6 +1,6 @@
 # Raven-Storm 工具包
 
-<img src="https://img.shields.io/badge/Python-3.8-blue"> <img src="https://img.shields.io/badge/Status-Beta-orange"> <img src="https://img.shields.io/badge/Version-4-red"> <img src="https://img.shields.io/badge/Licence-MIT-yellowgreen"> <a href="https://taguar258.github.io/Raven-Storm/INSTALLATION"><img src="https://img.shields.io/badge/Download-Now-green"></a>
+<img src="https://img.shields.io/badge/Python-3.8-blue"> <img src="https://img.shields.io/badge/Status-Beta-orange"> <img src="https://img.shields.io/badge/Version-4-red"> <img src="https://img.shields.io/badge/Licence-MIT-yellowgreen"> <a href="https://dateName.github.io/Raven-Storm/INSTALLATION"><img src="https://img.shields.io/badge/Download-Now-green"></a>
 
 **Raven-Storm 是一个强大的 DDoS 工具包，适用于渗透测试，包含多个协议的攻击模块，使用 Python(3.8) 编写。**
 
@@ -29,17 +29,17 @@ _我已将此仓库归档，因为我目前不想继续开发它。_
 只需输入以下命令即可在 Linux 上安装 Raven-Storm。
 
 ```bash
-curl -s https://raw.githubusercontent.com/Taguar258/Raven-Storm/master/install.sh | sudo bash -s
+curl -s https://raw.githubusercontent.com/dateName/Raven-Storm/master/install.sh | sudo bash -s
 ```
 
-<a style="color: grey" href="https://taguar258.github.io/Raven-Storm/INSTALLATION"><b>点击这里查看更详细的安装指南。</b></a>
+<a style="color: grey" href="https://dateName.github.io/Raven-Storm/INSTALLATION"><b>点击这里查看更详细的安装指南。</b></a>
 
 
-<a style="color: grey" href="https://github.com/Taguar258/Raven-Storm/blob/master/README.md#info-and-warning"><b>使用条款</b></a>
+<a style="color: grey" href="https://github.com/dateName/Raven-Storm/blob/master/README.md#info-and-warning"><b>使用条款</b></a>
 
-<a style="color: grey" href="https://github.com/Taguar258/Raven-Storm/blob/master/LICENSE">许可证</a>
+<a style="color: grey" href="https://github.com/dateName/Raven-Storm/blob/master/LICENSE">许可证</a>
 
-<a style="color: grey" href="https://github.com/Taguar258/Raven-Storm/projects/1">项目状态/待办事项</a>
+<a style="color: grey" href="https://github.com/dateName/Raven-Storm/projects/1">项目状态/待办事项</a>
 
 <a style="color: grey" href="https://github.com/Taguar258/CLIF/">CLIF 框架</a>
 
