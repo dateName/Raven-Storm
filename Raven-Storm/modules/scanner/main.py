@@ -17,8 +17,7 @@ from CLIF_Framework.framework import tools  # noqa: I900
 try:
 	import nmap
 except ImportError:
-	print("Please install the nmap module.")
-	quit()
+			print("请安装 nmap 模块。")
 
 event = event()
 tools = tools()
@@ -52,16 +51,16 @@ class Main:
 		event.commands(self.debug, "$")
 
 		event.help_comment("|\n|-- Port scanning:")
-		event.help("ports ip", "Get port of IP (get port i).")
-		event.help("ports web", "Get port of web (get port w).")
+		event.help("ports ip", "获取 IP 的端口 (get port i)。")
+		event.help("ports web", "获取网站的端口 (get port w)。")
 		event.help_comment("|\n|-- Network scanning:")
-		event.help("lan scan", "Get all Ips of Wifi.")
+		event.help("lan scan", "获取 Wifi 的所有 IP。")
 		event.help_comment("|\n|-- Domain scanning:")
-		event.help("domain ip", "Get the IP by host.")
+		event.help("domain ip", "通过主机名获取 IP。")
 		# event.help("post scan", "Get all post variables of a Website.")
 		event.help_comment("|\n|-- Speed testing:")
-		event.help("speed down", "Return the time it needs to open a website.")
-		event.help("speed ping", "Return the time it needs to ping an IP.")
+		event.help("speed down", "返回打开网站所需时间。")
+		event.help("speed ping", "返回 ping IP 所需时间。")
 
 	def banner(self):
 		system("clear || cls")
@@ -78,17 +77,17 @@ C_B----------------------------------------------------------C_W""").replace("C_
 		self.help()
 
 	def exit_console(self):
-		print("\033[1;32;0mHave a nice day.")
+		print("\033[1;32;0m祝您有美好的一天。")
 		quit()
 
 	def run_shell(self, command):
 		print("")
-		system(tools.arg("Enter shell command: \033[1;32;0m", ". ", command))
+		system(tools.arg("输入 shell 命令： \033[1;32;0m", ". ", command))
 		print("")
 
 	def debug(self, command):
 		print("")
-		eval(tools.arg("Enter debug command: \033[1;32;0m", "$ ", command))
+		eval(tools.arg("输入调试命令： \033[1;32;0m", "$ ", command))
 		print("")
 
 	@event.command
@@ -102,11 +101,11 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			var.nmapinstalled = True
 		except Exception as e:
 			system("clear || cls")
-			print("Please install the nmap package.")
-			print("Some functions will not work without it.")
+			print("请安装 nmap 包。")
+			print("没有它某些功能无法使用。")
 			print(e)
 			try:
-				input("[Press enter to continue without nmap]")  # noqa: S322
+				input("[按回车继续(没有 nmap)]")  # noqa: S322
 			except Exception:
 				quit()
 		self.banner()
@@ -114,7 +113,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	@event.event
 	def on_command_not_found(command):
 		print("")
-		print("The command you entered does not exist.")
+		print("您输入的命令不存在。")
 		print("")
 
 	def check_session(self):
@@ -155,11 +154,11 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			status = requests.post((var.server[2] + "set/com"), data={"password": var.server[3], "data": command}).text
 			if status != "200":
 				print("")
-				print("An error occured, while sending commands to the server.")
+				print("发送命令到服务器时发生错误。")
 				print("")
 
 	def help(self):
-		event.help_title("\x1b[1;39mScanner Help:\x1b[0;39m")
+		event.help_title("\x1b[1;39m扫描器 帮助：\x1b[0;39m")
 		tools.help("|   |-- ", " :: ", event)
 		print("\033[1;32;0m")
 
@@ -172,7 +171,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					print("Port: %s" % str(p))
 					sock.close()
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 
 	def lanscan(self):
 		try:
@@ -182,11 +181,11 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			gateways.close()
 			var.nm.scan(hosts=("%s.0/24" % gateway), arguments="-sP")
 			lanscandev = [(x, var.nm[x]['status']['state'], var.nm[x]["hostnames"][0]["name"], var.nm[x]["hostnames"][0]["type"]) for x in var.nm.all_hosts()]
-			print("Gate way: %s.0" % gateway)
+			print("网关：%s.0" % gateway)
 			for lanscandevice in lanscandev:
 				print("%s  %s  %s  %s" % (lanscandevice[0], lanscandevice[1], lanscandevice[2], lanscandevice[3]))
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 
 	def hbi(self, ip):
 		return socket.gethostbyname(ip)
@@ -195,7 +194,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 		try:
 			if "http" not in url or "://" not in url:
 				url = ("https://%s" % url)
-			print("Testing download speed...")
+			print("正在测试下载速度...")
 			start = time()
 			http = urllib3.PoolManager()
 			response = http.request('GET', url)
@@ -204,27 +203,27 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			result = (end - start)
 			return result
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 
 	def speedping(self, ip):
 		try:
-			print("Testing ping speed... (May require sudo)")
+			print("正在测试 ping 速度...（可能需要 sudo）")
 			start = time()
 			system("ping -c 1 %s > /dev/null" % ip)
 			end = time()
 			result = (end - start)
 			return result
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 
 	@event.command
 	def domain_ip(command):
 		print("")
 		try:
-			zw = (tools.arg("Domain: ", "domain ip ", command).replace("https://", "").replace("http://", ""))
+			zw = (tools.arg("域名：", "domain ip ", command).replace("https://", "").replace("http://", ""))
 			print(self.hbi(zw))
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print("")
 
 	@event.command
@@ -233,42 +232,42 @@ C_B----------------------------------------------------------C_W""").replace("C_
 		if var.nmapinstalled:
 			self.lanscan()
 		else:
-			print("Please install nmap.")
+			print("请安装 nmap。")
 		print("")
 
 	@event.command
 	def ports_ip(command):
 		print("")
 		try:
-			psi = tools.arg("IP: ", "ports ip ", command)
+			psi = tools.arg("IP：", "ports ip ", command)
 			self.portscan(psi)
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print("")
 
 	@event.command
 	def ports_web(command):
 		print("")
 		try:
-			psw = tools.arg("Website: ", "ports web ", command)
+			psw = tools.arg("网站：", "ports web ", command)
 			psww = socket.gethostbyname(psw.replace("https://", "").replace("http://", ""))
 			self.portscan(psww)
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print("")
 
 	@event.command
 	def speed_down(command):
 		print("")
-		zw = self.speedtest(tools.arg("Website: ", "speed down ", command))
-		print("Result: %s seconds" % zw)
+		zw = self.speedtest(tools.arg("网站：", "speed down ", command))
+		print("结果：%s 秒" % zw)
 		print("")
 
 	@event.command
 	def speed_ping(command):
 		print("")
-		zw = self.speedping(tools.arg("IP: ", "speed ping ", command))
-		print("Result: %s seconds" % zw)
+		zw = self.speedping(tools.arg("IP：", "speed ping ", command))
+		print("结果：%s 秒" % zw)
 		print("")
 
 
