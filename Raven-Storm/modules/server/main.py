@@ -81,11 +81,11 @@ C_Bo-----------------------------------------------------------C_W""")
 	@event.event
 	def on_command_not_found(command):
 		print("")
-		print("The command you entered does not exist.")
+		print("您输入的命令不存在。")
 		print("")
 
 	def exit_console(self):
-		print("Have a nice day.")
+		print("祝您有美好的一天。")
 		quit()
 
 	def _add_commands(self):
@@ -95,27 +95,27 @@ C_Bo-----------------------------------------------------------C_W""")
 		event.commands(self.help, "help")
 		event.parser(self.run_debug_arg, "$")
 		event.parser(self.run_shell_arg, ".")
-		event.help(["exit", "quit", "e", "q"], "Exit Raven-Storm.")
-		event.help("help", "View all commands.")
-		event.help(".", "Run a shell command.")
-		event.help("clear", "Clear the screen.")
-		event.help("host", "Enter a host ip.")
-		event.help("port", "Enter the hosting port.")
-		event.help("password", "Setup a password.")
-		event.help("run", "Start the server.")
+		event.help(["exit", "quit", "e", "q"], "退出 Raven-Storm。")
+		event.help("help", "查看所有命令。")
+		event.help(".", "运行 shell 命令。")
+		event.help("clear", "清除屏幕。")
+		event.help("host", "输入主机 IP。")
+		event.help("port", "输入主机端口。")
+		event.help("password", "设置密码。")
+		event.help("run", "启动服务器。")
 
 	def run_shell(self, command):
 		system(command)
 
 	def run_shell_arg(self, command):
-		return tools.arg("Enter shell command: ", ". ", command)
+		return tools.arg("输入 shell 命令：", ". ", command)
 		print("", end="")
 
 	def debug(self, command):
 		eval(command)
 
 	def run_debug_arg(self, command):
-		return tools.arg("Enter debug command: ", "$ ", command)
+		return tools.arg("输入调试命令：", "$ ", command)
 		print("", end="")
 
 	def help(self):
@@ -168,30 +168,28 @@ C_Bo-----------------------------------------------------------C_W""")
 			status = requests.post((var.server[2] + "set/com"), data={"password": var.server[3], "data": command}).text
 			if status != "200":
 				print("")
-				print("An error occured, while sending commands to the server.")
-				print("")
-
+					print("发送命令到服务器时发生错误。")
 	@event.command
 	def host(command):
 		print("")
-		var.host = str(tools.arg("IP: ", "host ", command))
+		var.host = str(tools.arg("IP：", "host ", command))
 		if "." not in var.host:
-			print("Invalid IP.")
+			print("无效的 IP。")
 		print("")
 
 	@event.command
 	def port(command):
 		print("")
 		try:
-			var.port = int(tools.arg("Port: ", "port ", command))
+			var.port = int(tools.arg("端口：", "port ", command))
 		except Exception as ex:
-			print("An error occured.", ex)
+			print("发生错误。", ex)
 		print("")
 
 	@event.command
 	def password(command):
 		print("")
-		var.password = str(tools.arg("Password: ", "password ", command))
+		var.password = str(tools.arg("密码：", "password ", command))
 		print("")
 
 	@event.command
@@ -208,14 +206,14 @@ C_Bo-----------------------------------------------------------C_W""")
 				except Exception:
 					return "500"
 			else:
-				return "Invalid Password"
+				return "无效的密码"
 
 		@app.route('/get/agreed', methods=["GET", "POST"])
 		def agreed_get():
 			if request.form['password'] == var.password:
 				return str(data["agreed"])
 			else:
-				return "Invalid Password"
+				return "无效的密码"
 
 		@app.route('/set/com', methods=["GET", "POST"])
 		def command_set():
@@ -223,7 +221,7 @@ C_Bo-----------------------------------------------------------C_W""")
 				data["commands"].append(request.form["data"])
 				return "200"
 			else:
-				return "Invalid Password"
+				return "无效的密码"
 
 		@app.route('/set/agreed', methods=["GET", "POST"])
 		def agreed_set():
@@ -231,7 +229,7 @@ C_Bo-----------------------------------------------------------C_W""")
 				data["agreed"] = request.form["data"]
 				return "200"
 			else:
-				return "Invalid Password"
+				return "无效的密码"
 
 		@app.route('/reset', methods=["GET", "POST"])
 		def reset_data():
@@ -239,7 +237,7 @@ C_Bo-----------------------------------------------------------C_W""")
 				data = {"agreed": False, "commands": [""]}
 				return "200"
 			else:
-				return "Invalid Password"
+				return "无效的密码"
 
 		app.run(host=var.host, port=var.port, use_reloader=False)
 		var.stop()
