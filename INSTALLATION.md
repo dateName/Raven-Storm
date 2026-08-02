@@ -1,21 +1,21 @@
 # Raven-Storm
 
-<a style="color: white;" href="https://github.com/Taguar258/Raven-Storm/blob/master/INSTALLATION.md#lazy-installer">Advanced</a> - <a style="color: white;" href="https://github.com/Taguar258/Raven-Storm/blob/master/INSTALLATION.md#or-start-your-unix-terminal-and-type-in-following">Expert</a> - <a style="color: white;" href="https://github.com/Taguar258/Raven-Storm/blob/master/INSTALLATION.md#other-operating-systems">Other operating systems</a> - <a style="color: white;" href="https://github.com/Taguar258/Raven-Storm/blob/master/INSTALLATION.md#uninstall">Uninstall</a>
+<a style="color: white;" href="https://github.com/Taguar258/Raven-Storm/blob/master/INSTALLATION.md#lazy-installer">高级</a> - <a style="color: white;" href="https://github.com/Taguar258/Raven-Storm/blob/master/INSTALLATION.md#or-start-your-unix-terminal-and-type-in-following">专家</a> - <a style="color: white;" href="https://github.com/Taguar258/Raven-Storm/blob/master/INSTALLATION.md#other-operating-systems">其他操作系统</a> - <a style="color: white;" href="https://github.com/Taguar258/Raven-Storm/blob/master/INSTALLATION.md#uninstall">卸载</a>
 
-## Lazy installer
-(Advanced)
+## 懒人安装器
+(高级)
 
-To install Raven-Storm enter the following command:
+要安装 Raven-Storm，请输入以下命令：
 
-(You might need to install curl)
+(您可能需要先安装 curl)
 
 ```curl -s https://raw.githubusercontent.com/Taguar258/Raven-Storm/master/install.sh | sudo bash -s```
 
 ![render1604868703436](https://user-images.githubusercontent.com/36562445/98484164-d0ec5300-220d-11eb-8fe5-0c9d4d2103e6.gif)
 
-## Or start your Unix terminal and type in following
+## 或者打开您的 Unix 终端并输入以下内容
 
-(Expert)
+(专家)
 
 ```sudo pkg/pacman/apt-get/brew install git python3 nmap python3-setuptools bluez dsniff iputils-ping aircrack-ng```
 
@@ -27,36 +27,36 @@ To install Raven-Storm enter the following command:
 
 ```sudo rst```
 
-## Other Operating Systems
+## 其他操作系统
 
-(Unix based systems like Linux and MacOS/OSX run Raven-Storm nativly.)
-(In case you want to use Raven-Storm on Windows, you will just need to perform the steps listed below, but keep in mind that it will not run as stable and not every module will work.)
+(基于 Unix 的系统，如 Linux 和 macOS/OSX，可原生运行 Raven-Storm。)
+(如果您想在 Windows 上使用 Raven-Storm，只需执行下面列出的步骤，但请注意它不会像 Unix 系统上一样稳定运行，并且并非所有模块都可用。)
 
-Just install python 3.8 and download this repository.
+只需安装 Python 3.8 并下载本仓库。
 
-You will then need to install the requirements (requirements.txt) and execute main.py.
+然后您需要安装依赖项（requirements.txt）并运行 main.py。
 
-0. Install Python (3.8) (3.6 should work as well.) (On windows, make sure to enable add to PATH.)
+0. 安装 Python（3.8）（3.6 也应可用）。(在 Windows 上，请确保勾选“添加到 PATH”。)
 
-1. Download Zip
+1. 下载压缩包
 
-2. Unzip
+2. 解压
 
-3. Open terminal in the Raven-Storm folder. (On windows you should be able to just right click the folder while holding down the shift key, you can then click on open in Powershell (administrator).)
+3. 在 Raven-Storm 文件夹中打开终端。(在 Windows 上，您应该可以按住 Shift 键右键点击文件夹，然后选择“在 PowerShell 中打开（管理员）”。)
 
-4. Install the requirements.
+4. 安装依赖项。
 
 `pip install -r requirements.txt`
 
-5. Execute Raven-Storm.
+5. 运行 Raven-Storm。
 
 `python main.py`
 
-(You might need to add a 3 directly after python and pip.)
+(您可能需要在 python 和 pip 后面直接加上数字 3。)
 
-## Uninstall
+## 卸载
 
-Just execute the folowing:
+只需执行以下命令：
 
 ```
 sudo bash /usr/share/Raven-Storm/uninstall.sh
