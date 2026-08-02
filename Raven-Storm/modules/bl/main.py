@@ -58,29 +58,29 @@ class Main:
 		event.commands(self.run_shell, ".")
 		event.commands(self.debug, "$")
 
-		event.help(["values", "ls"], "Show all options.")
+		event.help(["values", "ls"], "显示所有选项。")
 
-		event.help("scan", "Scan for targets.")
-		event.help("target", "Target a BL MAC adress.")
-		event.help("threads", "Amount of threads to use.")
-		event.help("size", "Size of the packets.")
-		event.help("sleep", "Delay between threads.")
+		event.help("scan", "扫描目标。")
+		event.help("target", "目标 BL MAC 地址。")
+		event.help("threads", "使用线程数量。")
+		event.help("size", "数据包大小。")
+		event.help("sleep", "线程间延迟。")
 		# event.help("interval", "Delay between each packet send.")
-		event.help("interface", "Set the interface you would like to use.")
-		event.help("run", "Run the stress test.")
+		event.help("interface", "设置要使用的接口。")
+		event.help("run", "运行压力测试。")
 
 	def banner(self):
 		system("clear || cls")
 
 		if "/" not in popen("command -v hcitool").read() or "/" not in popen("command -v l2ping").read():
-			input("\n[i] Please install Bluez to continue.\n[Press Enter to continue]")
+			input("\n[i] 请安装 Bluez 以继续。\n[按回车继续]")
 			system("clear || cls")
 			var.stop()
 			return
 
 		if geteuid_exists:
 			if geteuid() != 0:
-				input("\n[i] Please run with sudo privileges.\n[Press Enter to continue]")
+				input("\n[i] 请使用 sudo 权限运行。\n[按回车继续]")
 				system("clear || cls")
 				var.stop()
 				return
@@ -98,17 +98,17 @@ C_B----------------------------------------------------------C_W""").replace("C_
 		self.help()
 
 	def exit_console(self):
-		print("Have a nice day.")
+		print("祝您愉快。")
 		quit()
 
 	def run_shell(self, command):
 		print("")
-		system(tools.arg("Enter shell command: ", ". ", command))
+		system(tools.arg("输入 shell 命令：", ". ", command))
 		print("")
 
 	def debug(self, command):
 		print("")
-		eval(tools.arg("Enter debug command: ", "$ ", command))
+		eval(tools.arg("输入调试命令：", "$ ", command))
 		print("")
 
 	@event.command
@@ -122,7 +122,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	@event.event
 	def on_command_not_found(command):
 		print("")
-		print("The command you entered does not exist.")
+		print("您输入的命令不存在。")
 		print("")
 
 	def check_session(self):
@@ -163,23 +163,23 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			status = requests.post((var.server[2] + "set/com"), data={"password": var.server[3], "data": command}).text
 			if status != "200":
 				print("")
-				print("An error occured, while sending commands to the server.")
+				print("向服务器发送命令时发生错误。")
 				print("")
 
 	@event.command
 	def debug():
 		var.bl_debug = True
 		print("")
-		print("Debugging mode enabled.")
+		print("调试模式已启用。")
 		print("")
 
 	def show_values(self):
 		print("")
-		print("Interface: %s" % var.interface)
-		print("Threads: %s" % var.threads)
-		print("Site of packets: %s" % var.size)
-		print("Sleep between thread: %s" % var.sleep)
-		print("Target: %s" % var.target)
+		print("接口：%s" % var.interface)
+		print("线程：%s" % var.threads)
+		print("数据包大小：%s" % var.size)
+		print("线程间睡眠：%s" % var.sleep)
+		print("目标：%s" % var.target)
 		print("")
 
 	def help(self):
@@ -190,42 +190,42 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	@event.command
 	def target(command):
 		print("")
-		var.target = tools.arg("MAC: ", "target ", command)
+		var.target = tools.arg("MAC：", "target ", command)
 		if ":" not in var.target:
-			print("This MAC is invalid.")
+			print("该 MAC 无效。")
 		print("")
 
 	@event.command
 	def interface(command):
 		print("")
-		var.interface = tools.arg("Interface: ", "interface ", command)
+		var.interface = tools.arg("接口：", "interface ", command)
 		print("")
 
 	@event.command
 	def size(command):
 		print("")
 		try:
-			var.size = int(tools.arg("Size: ", "size ", command))
+			var.size = int(tools.arg("大小：", "size ", command))
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print("")
 
 	@event.command
 	def threads(command):
 		print(" ")
 		try:
-			var.threads = int(tools.arg("Threads: ", "threads ", command))
+			var.threads = int(tools.arg("线程：", "threads ", command))
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print(" ")
 
 	@event.command
 	def sleep(command):
 		print(" ")
 		try:
-			var.sleep = float(tools.arg("Delay between each thread: ", "sleep ", command))
+			var.sleep = float(tools.arg("线程间延迟：", "sleep ", command))
 		except Exception as e:
-			print("There was an error while executing.", e)
+			print("执行时发生错误。", e)
 		print(" ")
 
 	@event.command
@@ -252,7 +252,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 	def run():
 		def execute():
 			print("")
-			print("To stop the attack press: ENTER or CTRL + C")
+			print("停止攻击请按：ENTER 或 CTRL + C")
 			print("")
 
 			var.ps1 = ""  # Change due to threading bug.
@@ -264,13 +264,13 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					t.start()
 					sleep(var.sleep)
 				except Exception:
-					print("Could not start thread %s." % thread)
+					print("无法启动线程 %s。" % thread)
 
 			def reset_attack():
-				print("Stopping threads...")
+				print("正在停止线程...")
 				system("sudo killall l2ping")
 				if var.bl_debug:
-					print("Saving debugging log...")
+					print("正在保存调试日志...")
 					output_to = path.join(getcwd(), "bl_debug_log.txt")
 
 					write_method = "a"
@@ -286,7 +286,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					output_file.write(str(version + "\n"))
 					output_file.write(str("\n".join(var.command_log)))
 					output_file.close()
-				print("Done.")
+				print("完成。")
 				quit()
 
 			def check_stopped_execution():
@@ -308,7 +308,7 @@ C_B----------------------------------------------------------C_W""").replace("C_
 			if var.server[0] and var.server[1]:
 				status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "False"}).text
 				if status != "200":
-					print("An error occured, while sending data to the server.")
+					print("发送数据到服务器时发生错误。")
 
 			reset_attack()
 
@@ -320,27 +320,27 @@ C_B----------------------------------------------------------C_W""").replace("C_
 					break
 				else:
 					sleep(1)
-		elif not tools.question("\nDo you agree to the terms of use?"):
-			print("Agreement not accepted.")
+		elif not tools.question("\n您是否同意使用条款？"):
+			print("未接受协议。")
 			quit()
 		else:
 			if var.server[0] and var.server[1]:
-				if tools.question("\nWould you like to use the host as part of the ddos?"):
+				if tools.question("\n是否希望将该主机用作 DDoS 的一部分？"):
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "True"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 					execute()
 				else:
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "True"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 					try:
-						print("[Press Enter to stop the attack.]")
+						print("[按回车停止攻击。]")
 					except KeyboardInterrupt:
 						pass
 					status = requests.post((var.server[2] + "set/agreed"), data={"password": var.server[3], "data": "False"}).text
 					if status != "200":
-						print("An error occured, while sending data to the server.")
+						print("发送数据到服务器时发生错误。")
 			else:
 				execute()
 
